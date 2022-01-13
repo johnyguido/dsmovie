@@ -1,16 +1,22 @@
 package com.devsuperior.dsmovie.entities;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_movie")
 public class Movie {
+
+	@OneToMany(mappedBy = "id.movie")
+	private Set<Score> scores = new HashSet<>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,24 +82,7 @@ public class Movie {
 		return Objects.hash(id);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Movie other = (Movie) obj;
-		return Objects.equals(id, other.id);
+	public Set<Score> getScores() {
+		return scores;
 	}
-
-	@Override
-	public String toString() {
-		return "Movie [id=" + id + ", title=" + title + ", score=" + score + ", count=" + count + ", image=" + image
-				+ "]";
-	}
-
-	
-	
 }
